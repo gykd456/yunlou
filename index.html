@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -6,26 +6,30 @@
   <title>云篓 - 网页素材中转站</title>
   <meta name="description" content="云篓是一款 Chrome / Edge 浏览器扩展，把网页图片、视频、文字和文件收进侧边栏素材库，统一管理并拖拽复用。" />
   <style>
+    /* 主题变量：改品牌色、阴影、圆角优先改这里 */
     :root {
       color-scheme: light;
-      --bg: #f8faf2;
+      --bg: #fbfaf3;
       --paper: #fffef8;
-      --ink: #151d17;
-      --soft: #5f6f63;
-      --muted: #8a958a;
-      --brand: #b9f24a;
-      --brand-dark: #37661d;
-      --brand-soft: #eefbdd;
-      --line: rgba(50, 76, 41, 0.14);
-      --line-strong: rgba(50, 76, 41, 0.24);
-      --shadow-sm: 0 12px 32px rgba(41, 64, 33, 0.08);
-      --shadow-md: 0 24px 70px rgba(41, 64, 33, 0.13);
-      --shadow-lg: 0 46px 130px rgba(41, 64, 33, 0.18);
-      --radius: 28px;
+      --glass: rgba(255, 254, 248, 0.78);
+      --ink: #17221c;
+      --soft: #647266;
+      --muted: #879284;
+      --green: #b9f24a;
+      --green-2: #8dcc3f;
+      --deep: #35631e;
+      --cream: #fff4d8;
+      --line: rgba(63, 93, 44, 0.16);
+      --line-strong: rgba(63, 93, 44, 0.28);
+      --shadow-sm: 0 12px 30px rgba(55, 80, 42, 0.08);
+      --shadow-md: 0 24px 70px rgba(55, 80, 42, 0.14);
+      --shadow-lg: 0 42px 120px rgba(55, 80, 42, 0.17);
+      --radius: 30px;
       --max: 1180px;
     }
 
     * { box-sizing: border-box; }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -34,13 +38,12 @@
       color: var(--ink);
       font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
       background:
-        radial-gradient(circle at 8% 0%, rgba(185, 242, 74, 0.24), transparent 30rem),
-        radial-gradient(circle at 92% 12%, rgba(196, 228, 180, 0.48), transparent 34rem),
-        linear-gradient(180deg, #fffef8 0%, var(--bg) 54%, #f1f7e9 100%);
+        radial-gradient(circle at 0% 0%, rgba(205, 240, 255, 0.72), transparent 25rem),
+        radial-gradient(circle at 100% 0%, rgba(185, 242, 74, 0.42), transparent 30rem),
+        linear-gradient(180deg, #fffef8 0%, var(--bg) 56%, #f2f8e9 100%);
     }
 
     a { color: inherit; }
-    img { max-width: 100%; }
 
     .shell {
       width: min(var(--max), calc(100% - 40px));
@@ -58,13 +61,13 @@
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 20px;
-      min-height: 62px;
+      gap: 18px;
+      min-height: 58px;
       border: 1px solid var(--line);
       border-radius: 999px;
       padding: 10px 12px;
-      background: rgba(255, 254, 248, 0.86);
-      box-shadow: 0 16px 54px rgba(41, 64, 33, 0.1);
+      background: rgba(255, 254, 248, 0.82);
+      box-shadow: 0 16px 52px rgba(55, 80, 42, 0.1);
       backdrop-filter: blur(18px);
     }
 
@@ -72,11 +75,27 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      color: var(--ink);
       text-decoration: none;
+      font-weight: 950;
     }
 
-    .brand-logo { width: 46px; height: 34px; object-fit: contain; }
-    .brand-word { width: 58px; height: auto; object-fit: contain; }
+    .brand-logo,
+    .brand-word {
+      display: block;
+      flex: 0 0 auto;
+      object-fit: contain;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 34px;
+    }
+
+    .brand-word {
+      width: 58px;
+      height: auto;
+    }
 
     .nav-links {
       display: flex;
@@ -89,14 +108,14 @@
       padding: 8px 12px;
       color: var(--soft);
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 850;
       text-decoration: none;
       transition: color 180ms ease, background 180ms ease;
     }
 
     .nav-links a:hover {
-      color: var(--brand-dark);
-      background: var(--brand-soft);
+      color: var(--deep);
+      background: #effbdd;
     }
 
     .btn {
@@ -104,15 +123,25 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       min-height: 50px;
       overflow: hidden;
       border: 1px solid transparent;
       border-radius: 999px;
       padding: 0 20px;
-      font-weight: 900;
+      font-weight: 950;
       text-decoration: none;
       white-space: nowrap;
-      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.6) 48%, transparent 72%);
+      transform: translateX(-130%);
+      transition: transform 520ms ease;
     }
 
     .btn:hover {
@@ -120,33 +149,35 @@
       box-shadow: var(--shadow-md);
     }
 
+    .btn:hover::after { transform: translateX(130%); }
+
     .btn-primary {
-      color: #15210b;
-      background: linear-gradient(180deg, #cdfb62, var(--brand));
-      box-shadow: 0 18px 42px rgba(112, 170, 32, 0.24), inset 0 -2px 0 rgba(50, 86, 17, 0.14);
+      color: #17230c;
+      background: linear-gradient(180deg, #c9fb5d, var(--green));
+      box-shadow: 0 18px 40px rgba(118, 178, 36, 0.26), inset 0 -2px 0 rgba(65, 105, 20, 0.15);
     }
 
     .btn-store {
       color: var(--ink);
       border-color: var(--line-strong);
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       box-shadow: var(--shadow-sm);
     }
 
     .btn-ghost {
-      color: var(--brand-dark);
-      border-color: rgba(55, 102, 29, 0.2);
-      background: rgba(238, 251, 221, 0.76);
+      color: var(--deep);
+      border-color: rgba(53, 99, 30, 0.18);
+      background: rgba(239, 251, 221, 0.78);
       box-shadow: var(--shadow-sm);
     }
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 0.92fr) minmax(520px, 1.08fr);
-      gap: 56px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(520px, 1.1fr);
+      gap: 58px;
       align-items: center;
-      min-height: 720px;
-      padding: 86px 0 70px;
+      min-height: 710px;
+      padding: 86px 0 74px;
     }
 
     .eyebrow {
@@ -154,14 +185,14 @@
       align-items: center;
       min-height: 38px;
       margin-bottom: 22px;
-      border: 1px solid rgba(55, 102, 29, 0.18);
+      border: 1px solid rgba(74, 124, 36, 0.2);
       border-radius: 999px;
       padding: 0 14px;
-      color: var(--brand-dark);
-      background: rgba(238, 251, 221, 0.9);
+      color: var(--deep);
+      background: rgba(238, 251, 221, 0.92);
       box-shadow: var(--shadow-sm);
       font-size: 14px;
-      font-weight: 900;
+      font-weight: 950;
     }
 
     h1, h2, h3, p { overflow-wrap: anywhere; }
@@ -169,19 +200,19 @@
     h1 {
       max-width: 720px;
       margin: 0;
-      font-size: clamp(54px, 6.4vw, 88px);
-      line-height: 1.04;
+      font-size: clamp(54px, 6.6vw, 86px);
+      line-height: 0.94;
       letter-spacing: 0;
     }
 
     h1 strong {
       display: block;
-      color: var(--brand-dark);
+      color: var(--deep);
       font-weight: 950;
     }
 
     .lead {
-      max-width: 610px;
+      max-width: 620px;
       margin: 24px 0 0;
       color: var(--soft);
       font-size: 18px;
@@ -194,6 +225,8 @@
       margin-top: 32px;
     }
 
+    .hero-actions .btn { min-width: 138px; }
+
     .hero-note {
       display: flex;
       flex-wrap: wrap;
@@ -201,7 +234,7 @@
       margin-top: 22px;
       color: var(--muted);
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 850;
     }
 
     .hero-note span {
@@ -214,20 +247,26 @@
     .visual {
       position: relative;
       min-width: 0;
-      min-height: 560px;
-      background: transparent;
-      overflow: visible;
+      min-height: 520px;
+      border: 1px solid var(--line);
+      border-radius: 38px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(185, 242, 74, 0.18), transparent 16rem),
+        linear-gradient(145deg, rgba(255,255,255,.8), rgba(244,255,229,.72));
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      animation: float 5.8s ease-in-out infinite;
     }
 
     .browser {
       position: absolute;
-      left: 14px;
-      top: 24px;
-      width: 64%;
+      left: 36px;
+      top: 34px;
+      width: 56%;
       border: 1px solid var(--line);
       border-radius: 26px;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255,255,255,.78);
       box-shadow: var(--shadow-md);
     }
 
@@ -244,7 +283,7 @@
       width: 9px;
       height: 9px;
       border-radius: 999px;
-      background: #d8e3d1;
+      background: #d9e5d0;
     }
 
     .url {
@@ -254,14 +293,16 @@
       background: #eef4e9;
     }
 
-    .browser-body { padding: 18px; }
+    .browser-body {
+      padding: 18px;
+    }
 
     .web-shot {
-      height: 148px;
+      height: 142px;
       border-radius: 20px;
       background:
-        linear-gradient(135deg, rgba(255,255,255,.2), rgba(185,242,74,.12)),
-        url("宣传图/宣传图%20(2).png") center / cover;
+        linear-gradient(135deg, rgba(255,255,255,.2), rgba(185,242,74,.16)),
+        url("https://vip.123pan.cn/1851737395/ymjew503t0n000ddy1fmd8arv5hco2egDIYyDIUwAwD2AGxvBID2BF==.png") center / cover;
       box-shadow: inset 0 0 0 1px rgba(63, 93, 44, 0.08);
     }
 
@@ -274,15 +315,15 @@
     .lines span {
       height: 11px;
       border-radius: 999px;
-      background: #e8eee3;
+      background: #e7ede2;
     }
 
     .lines span:nth-child(2) { width: 76%; }
 
     .save-pill {
       position: absolute;
-      right: 24px;
-      top: 154px;
+      right: 26px;
+      top: 158px;
       display: inline-flex;
       align-items: center;
       gap: 9px;
@@ -290,10 +331,10 @@
       border: 1px solid rgba(75, 121, 33, 0.2);
       border-radius: 999px;
       padding: 0 10px 0 16px;
-      color: var(--brand-dark);
-      background: rgba(255,255,255,.94);
+      color: var(--deep);
+      background: rgba(255,255,255,.9);
       box-shadow: var(--shadow-md);
-      font-weight: 900;
+      font-weight: 950;
       animation: breathe 2.8s ease-in-out infinite;
     }
 
@@ -303,21 +344,20 @@
       height: 34px;
       place-items: center;
       border-radius: 999px;
-      color: #14220a;
-      background: var(--brand);
+      background: var(--green);
       font-style: normal;
     }
 
     .panel {
       position: absolute;
-      right: 0;
-      top: 78px;
-      width: 43%;
-      min-width: 282px;
+      right: 32px;
+      top: 92px;
+      width: 38%;
+      min-width: 250px;
       border: 1px solid var(--line);
       border-radius: 30px;
       padding: 18px;
-      background: rgba(255, 254, 248, 0.92);
+      background: rgba(255, 254, 248, 0.9);
       box-shadow: var(--shadow-lg);
       backdrop-filter: blur(18px);
     }
@@ -337,13 +377,7 @@
       height: 38px;
       place-items: center;
       border-radius: 15px;
-      background: var(--brand-soft);
-    }
-
-    .tiny-logo img {
-      width: 26px;
-      height: 22px;
-      object-fit: contain;
+      background: #eefbdd;
     }
 
     .tabs {
@@ -359,17 +393,20 @@
       place-items: center;
       border-radius: 999px;
       background: #eef4e8;
-      color: #68766a;
+      color: #6d796c;
       font-size: 12px;
       font-weight: 850;
     }
 
     .tabs span:first-child {
       color: #20300f;
-      background: var(--brand);
+      background: var(--green);
     }
 
-    .asset-list { display: grid; gap: 10px; }
+    .asset-list {
+      display: grid;
+      gap: 10px;
+    }
 
     .asset {
       display: grid;
@@ -379,7 +416,7 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       padding: 9px;
-      background: rgba(255,255,255,.72);
+      background: rgba(255,255,255,.7);
     }
 
     .thumb {
@@ -389,7 +426,7 @@
       background: linear-gradient(135deg, #d9ffd1, #b9f24a);
     }
 
-    .asset:nth-child(2) .thumb { background: linear-gradient(135deg, #ffe0bd, #ff9c6e); }
+    .asset:nth-child(2) .thumb { background: linear-gradient(135deg, #ffcfb8, #ff866a); }
     .asset:nth-child(3) .thumb { background: linear-gradient(135deg, #fff3a8, #d9ee77); }
 
     .asset strong {
@@ -403,120 +440,67 @@
     .tag {
       border-radius: 999px;
       padding: 4px 8px;
-      color: var(--brand-dark);
-      background: var(--brand-soft);
+      color: var(--deep);
+      background: #effbdd;
       font-size: 12px;
       font-weight: 900;
     }
 
-    .material-flow {
+    .basket {
       position: absolute;
-      inset: 0;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .flow-path {
-      display: none;
-    }
-
-    .flow-target {
-      position: absolute;
-      right: 102px;
-      top: 211px;
-      width: 58px;
-      height: 58px;
-      border-radius: 999px;
-      background: rgba(185, 242, 74, 0.28);
-      box-shadow: 0 0 0 0 rgba(185, 242, 74, 0.34);
-      animation: targetPulse 3.2s ease-in-out infinite;
-    }
-
-    .flow-target::after {
-      content: "";
-      position: absolute;
-      inset: 17px;
-      border-radius: 999px;
-      background: var(--brand);
-    }
-
-    .flying-asset {
-      position: absolute;
-      left: var(--start-x);
-      top: var(--start-y);
-      display: grid;
-      width: 42px;
-      height: 42px;
-      place-items: center;
-      border: 0;
-      background: transparent;
-      box-shadow: none;
-      animation: dragToPanel 6s cubic-bezier(.48, 0, .18, 1) infinite;
-      animation-delay: var(--delay);
-    }
-
-    .flying-asset::before {
-      content: "";
-      display: block;
-      width: 34px;
-      height: 30px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #d9ffd1, var(--brand));
-      box-shadow: 0 14px 30px rgba(41, 64, 33, 0.14);
-    }
-
-    .flying-asset:nth-child(1) {
-      --start-x: 132px;
-      --start-y: 154px;
-      --tx: 326px;
-      --ty: 44px;
-      --delay: 0s;
-    }
-
-    .flying-asset:nth-child(2) {
-      --start-x: 196px;
-      --start-y: 184px;
-      --tx: 274px;
-      --ty: 22px;
-      --delay: 2s;
-    }
-
-    .flying-asset:nth-child(2)::before {
-      width: 30px;
-      height: 30px;
-      background: linear-gradient(135deg, #ffe0bd, #ff9c6e);
-    }
-
-    .flying-asset:nth-child(3) {
-      --start-x: 260px;
-      --start-y: 222px;
-      --tx: 218px;
-      --ty: -10px;
-      --delay: 4s;
-    }
-
-    .flying-asset:nth-child(3)::before {
-      width: 26px;
-      height: 28px;
-      border-radius: 8px;
+      left: 120px;
+      bottom: 46px;
+      width: 210px;
+      height: 112px;
+      border-radius: 24px 24px 42px 42px;
       background:
-        linear-gradient(#fffef8 0 0) 50% 9px / 14px 2px no-repeat,
-        linear-gradient(#fffef8 0 0) 50% 16px / 18px 2px no-repeat,
-        linear-gradient(135deg, #d9ee77, #b9f24a);
+        linear-gradient(90deg, rgba(67, 120, 26, 0.14) 1px, transparent 1px) 0 0 / 18px 18px,
+        linear-gradient(0deg, rgba(67, 120, 26, 0.12) 1px, transparent 1px) 0 0 / 18px 18px,
+        linear-gradient(180deg, #b9f24a, #8dcc3f);
+      box-shadow: inset 0 -12px 0 rgba(58, 95, 24, 0.15), var(--shadow-md);
+    }
+
+    .basket::before {
+      content: "云篓";
+      position: absolute;
+      left: 50%;
+      top: -20px;
+      transform: translateX(-50%);
+      display: grid;
+      min-width: 90px;
+      height: 36px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.9);
+      box-shadow: var(--shadow-sm);
+      font-weight: 950;
+    }
+
+    .flow-label {
+      position: absolute;
+      left: 44px;
+      bottom: 174px;
+      border-radius: 999px;
+      padding: 8px 14px;
+      color: var(--deep);
+      background: rgba(238, 251, 221, 0.92);
+      box-shadow: var(--shadow-sm);
+      font-weight: 950;
     }
 
     .section { padding: 78px 0; }
 
     .section-head {
       display: grid;
-      grid-template-columns: minmax(0, 0.78fr) minmax(280px, 0.42fr);
+      grid-template-columns: minmax(0, 0.72fr) minmax(280px, 0.42fr);
       gap: 28px;
       align-items: end;
       margin-bottom: 28px;
     }
 
     .kicker {
-      color: var(--brand-dark);
+      color: var(--deep);
       font-size: 13px;
       font-weight: 950;
       letter-spacing: 0.08em;
@@ -525,73 +509,13 @@
 
     h2 {
       margin: 8px 0 0;
-      font-size: clamp(34px, 4.2vw, 56px);
+      font-size: clamp(34px, 4.4vw, 56px);
       line-height: 1.08;
-      letter-spacing: 0;
     }
 
     .section-head p {
       margin: 0;
       color: var(--soft);
-    }
-
-    .section-head.is-stacked {
-      grid-template-columns: 1fr;
-      gap: 14px;
-      align-items: start;
-      max-width: 760px;
-    }
-
-    .section-head.is-stacked p {
-      max-width: 620px;
-    }
-
-    .before-after {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .process-card {
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 24px;
-      background: rgba(255, 254, 248, 0.78);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .process-card.is-now {
-      border-color: rgba(91, 146, 38, 0.34);
-      background: linear-gradient(145deg, rgba(255, 254, 248, 0.92), rgba(238, 251, 221, 0.72));
-      box-shadow: var(--shadow-md);
-    }
-
-    .process-card h3 {
-      margin: 0 0 16px;
-      font-size: 22px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .chips span {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 8px 11px;
-      color: var(--soft);
-      background: rgba(255, 255, 255, 0.72);
-      font-size: 14px;
-      font-weight: 850;
-    }
-
-    .is-now .chips span {
-      color: #21320f;
-      border-color: rgba(91, 146, 38, 0.22);
-      background: rgba(185, 242, 74, 0.28);
     }
 
     .workflow {
@@ -622,7 +546,7 @@
       min-height: 176px;
       border-radius: 24px;
       padding: 22px 18px;
-      background: rgba(255,255,255,.68);
+      background: rgba(255,255,255,.66);
     }
 
     .num {
@@ -633,7 +557,7 @@
       place-items: center;
       border-radius: 18px;
       color: #20300f;
-      background: var(--brand);
+      background: var(--green);
       box-shadow: 0 0 0 8px rgba(185, 242, 74, .2);
       font-weight: 950;
     }
@@ -665,7 +589,7 @@
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 34px;
-      background: rgba(255, 254, 248, 0.82);
+      background: rgba(255, 254, 248, 0.78);
       box-shadow: var(--shadow-md);
     }
 
@@ -673,7 +597,6 @@
       position: relative;
       aspect-ratio: 16 / 9;
       width: 100%;
-      cursor: zoom-in;
     }
 
     .shot img {
@@ -685,11 +608,14 @@
       object-fit: contain;
       background: #fffef8;
       opacity: 0;
-      transition: opacity 360ms ease, transform 520ms ease;
+      transition: transform 520ms ease;
     }
 
-    .shot img.is-active { opacity: 1; }
-    .shot:hover img { transform: scale(1.015); }
+    .shot img.is-active {
+      opacity: 1;
+    }
+
+    .shot:hover img { transform: scale(1.02); }
 
     .shot-dots {
       position: absolute;
@@ -711,75 +637,19 @@
 
     .shot-dots span.is-active {
       width: 22px;
-      background: var(--brand);
+      background: var(--green);
     }
 
     .showcase-copy {
+      position: relative;
+      z-index: 2;
       display: grid;
       align-content: center;
       gap: 18px;
       padding: 30px;
-    }
-
-    .metric-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .metric {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 14px;
-      background: rgba(255, 255, 255, 0.58);
-    }
-
-    .metric strong {
-      display: block;
-      color: var(--brand-dark);
-      font-size: 22px;
-      line-height: 1.1;
-    }
-
-    .metric span {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .tool-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .tool-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 38px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 12px 0 8px;
-      color: var(--soft);
-      background: rgba(255, 255, 255, 0.62);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .tool-logo i {
-      display: grid;
-      width: 26px;
-      height: 26px;
-      place-items: center;
-      border-radius: 999px;
-      color: #17300e;
-      background: var(--brand);
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 950;
+      min-height: auto;
+      align-self: center;
+      max-width: 100%;
     }
 
     .feature-grid,
@@ -812,34 +682,26 @@
       margin-bottom: 28px;
       place-items: center;
       border-radius: 18px;
-      color: var(--brand-dark);
-      background: var(--brand-soft);
+      color: var(--deep);
+      background: #effbdd;
       font-size: 22px;
       font-weight: 950;
     }
 
     .privacy-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
-    .contact-section {
-      padding: 76px 0 36px;
-    }
-
-    .contact-panel,
-    .download-panel {
-      border: 1px solid var(--line);
-      border-radius: 38px;
-      background:
-        radial-gradient(circle at 84% 42%, rgba(185, 242, 74, .28), transparent 18rem),
-        rgba(255, 254, 248, 0.84);
-      box-shadow: var(--shadow-lg);
-    }
-
     .download-panel {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 24px;
       align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 38px;
       padding: 38px;
+      background:
+        radial-gradient(circle at 84% 50%, rgba(185, 242, 74, .28), transparent 17rem),
+        rgba(255, 254, 248, 0.82);
+      box-shadow: var(--shadow-lg);
     }
 
     .download-panel p {
@@ -855,71 +717,17 @@
       justify-content: flex-end;
     }
 
-    .contact-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 28px;
-      align-items: center;
-      padding: 34px;
-    }
-
-    .contact-panel h2 {
-      max-width: 720px;
-      margin-top: 4px;
-    }
-
-    .contact-panel p {
-      max-width: 680px;
-      margin: 14px 0 0;
-      color: var(--soft);
-    }
-
-    .wechat-card {
-      display: grid;
-      gap: 12px;
-      justify-items: center;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 14px;
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: var(--shadow-sm);
-      text-align: center;
-    }
-
-    .wechat-card img {
-      display: block;
-      width: 138px;
-      height: 138px;
-      object-fit: contain;
-      border-radius: 12px;
-      background: #fff;
-    }
-
-    .wechat-card strong {
-      display: block;
-      font-size: 15px;
-      line-height: 1.2;
-    }
-
-    .wechat-card span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 850;
-    }
-
     footer {
       display: flex;
       justify-content: space-between;
       gap: 18px;
-      padding: 24px 0 44px;
+      padding: 34px 0 44px;
       color: var(--soft);
       font-size: 14px;
     }
 
     footer a {
-      color: var(--brand-dark);
+      color: var(--deep);
       font-weight: 900;
       text-decoration: none;
     }
@@ -932,41 +740,40 @@
       justify-content: flex-end;
     }
 
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 80;
-      display: none;
-      place-items: center;
-      padding: 24px;
-      background: rgba(12, 18, 13, 0.78);
-      backdrop-filter: blur(12px);
+    .wechat-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 2px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 10px 12px;
+      background: rgba(255, 254, 248, 0.82);
+      box-shadow: var(--shadow-sm);
     }
 
-    .lightbox.is-open { display: grid; }
-
-    .lightbox button {
-      position: absolute;
-      right: 22px;
-      top: 20px;
-      width: 44px;
-      height: 44px;
-      border: 1px solid rgba(255,255,255,.28);
-      border-radius: 999px;
-      color: #fff;
-      background: rgba(255,255,255,.12);
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .lightbox img {
+    .wechat-card img {
       display: block;
-      width: min(1120px, 96vw);
-      max-height: 88vh;
+      width: 112px;
+      height: 112px;
       object-fit: contain;
-      border-radius: 20px;
-      background: #fffef8;
-      box-shadow: 0 34px 120px rgba(0,0,0,.36);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .wechat-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .wechat-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
     }
 
     .reveal {
@@ -980,37 +787,14 @@
       transform: translateY(0);
     }
 
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
     @keyframes breathe {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.045); }
-    }
-
-    @keyframes dragToPanel {
-      0% {
-        opacity: 0;
-        transform: translate3d(0, 0, 0) scale(0.82);
-      }
-      7% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      24% {
-        opacity: 1;
-        transform: translate3d(var(--tx), var(--ty), 0) scale(0.92);
-      }
-      34% {
-        opacity: 0;
-        transform: translate3d(calc(var(--tx) + 30px), var(--ty), 0) scale(0.56);
-      }
-      100% {
-        opacity: 0;
-        transform: translate3d(calc(var(--tx) + 30px), var(--ty), 0) scale(0.56);
-      }
-    }
-
-    @keyframes targetPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(185, 242, 74, 0.34); }
-      50% { box-shadow: 0 0 0 18px rgba(185, 242, 74, 0); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1030,8 +814,7 @@
       .hero,
       .section-head,
       .showcase,
-      .download-panel,
-      .contact-panel {
+      .download-panel {
         grid-template-columns: 1fr;
       }
       .hero {
@@ -1041,24 +824,25 @@
       }
       .feature-grid,
       .privacy-grid,
-      .workflow,
-      .before-after {
+      .workflow {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .workflow::before { display: none; }
       .download-actions { justify-content: flex-start; }
-      .contact-panel { justify-items: start; }
     }
 
     @media (max-width: 640px) {
       .shell { width: min(100% - 20px, 440px); }
       .nav-wrap { top: 8px; padding-top: 8px; }
+      .nav {
+        border-radius: 999px;
+        min-height: 58px;
+      }
       .nav .btn { min-height: 40px; padding: 0 12px; font-size: 13px; }
       .brand-logo { width: 40px; height: 30px; }
       .brand-word { width: 50px; }
       .hero { padding: 38px 0 42px; }
       h1 { font-size: 44px; }
-      h2 { font-size: 31px; }
       .lead,
       .download-panel p { font-size: 16px; }
       .hero-actions,
@@ -1066,7 +850,8 @@
       .hero-actions .btn,
       .download-actions .btn { width: 100%; }
       .visual {
-        min-height: 520px;
+        min-height: 460px;
+        border-radius: 28px;
       }
       .browser {
         left: 16px;
@@ -1075,8 +860,8 @@
         width: auto;
       }
       .panel {
-        left: 24px;
-        right: 24px;
+        left: 28px;
+        right: 28px;
         top: 190px;
         width: auto;
         min-width: 0;
@@ -1085,30 +870,33 @@
         right: 24px;
         top: 140px;
       }
-      .material-flow { display: none; }
+      .basket,
+      .flow-label { display: none; }
       .section { padding: 48px 0; }
-      .contact-section { padding-top: 48px; }
       .section-head { gap: 12px; margin-bottom: 20px; }
+      h2 { font-size: 31px; }
       .feature-grid,
       .privacy-grid,
-      .workflow,
-      .before-after,
-      .metric-row {
+      .workflow {
         grid-template-columns: 1fr;
       }
+      .shot img { min-height: 0; }
       .showcase-copy,
-      .download-panel,
-      .contact-panel {
+      .download-panel {
         padding: 24px;
         border-radius: 28px;
       }
-      .wechat-card { width: 100%; }
       footer {
         display: grid;
         justify-items: center;
         text-align: center;
       }
       .footer-links { justify-content: center; }
+      .wechat-card {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+      }
     }
   </style>
 </head>
@@ -1125,7 +913,7 @@
         <a href="#features">能力</a>
         <a href="#contact">联系我们</a>
       </div>
-      <a class="btn btn-primary" href="https://1851737395.share.123pan.cn/123pan/onuBvd-vTKKv" target="_blank" rel="noopener">立即下载</a>
+      <a class="btn btn-primary" href="material-hub-extension.zip" download>立即下载</a>
     </nav>
   </header>
 
@@ -1134,16 +922,16 @@
       <div class="hero-copy reveal">
         <div class="eyebrow">笨蛋萝卜工作室 · Chrome / Edge 扩展</div>
         <h1>随处存，<strong>随处用。</strong></h1>
-        <p class="lead">云篓是一个网页素材中转站。看到图片、视频、文字或文件，不用再下载、找文件夹、重命名、上传；一键收进侧边栏，需要时直接拖拽复用。</p>
+        <p class="lead">云篓是你的网页素材中转站。图片、视频、文字、文件，一键收集到侧边栏，统一管理，随用随拖，灵感不再散落在浏览器标签里。</p>
         <div class="hero-actions" aria-label="首屏下载操作">
-          <a class="btn btn-primary" href="https://1851737395.share.123pan.cn/123pan/onuBvd-vTKKv" target="_blank" rel="noopener">下载插件</a>
+          <a class="btn btn-primary" href="material-hub-extension.zip" download>下载插件</a>
           <a class="btn btn-store" href="https://chromewebstore.google.com/" target="_blank" rel="noopener">Chrome 商店下载</a>
-          <a class="btn btn-ghost" href="install.html">使用教程</a>
+          <a class="btn btn-ghost" href="#workflow">使用教程</a>
         </div>
         <div class="hero-note">
           <span>本地 IndexedDB 暂存</span>
           <span>可选 WebDAV 同步</span>
-          <span>拖到任意上传区</span>
+          <span>拖拽复用到任意网页</span>
         </div>
       </div>
 
@@ -1154,11 +942,11 @@
             <div class="web-shot"></div>
             <div class="lines"><span></span><span></span></div>
           </div>
-          <div class="save-pill">一键保存 <i>✓</i></div>
+          <div class="save-pill">保存图片 <i>钩</i></div>
         </div>
 
         <aside class="panel" aria-label="云篓侧边栏">
-          <div class="panel-head"><span class="tiny-logo"><img src="logo.svg" alt="" /></span>云篓</div>
+          <div class="panel-head"><span class="tiny-logo">☁</span>云篓</div>
           <div class="tabs"><span>全部</span><span>图片</span><span>文字</span></div>
           <div class="asset-list">
             <div class="asset"><span class="thumb"></span><strong>风景图.jpg</strong><span class="tag">图片</span></div>
@@ -1167,73 +955,47 @@
           </div>
         </aside>
 
-        <div class="material-flow" aria-label="素材进入云篓动画">
-          <span class="flying-asset"></span>
-          <span class="flying-asset"></span>
-          <span class="flying-asset"></span>
-          <span class="flow-path"></span>
-          <span class="flow-target"></span>
-        </div>
+        <div class="flow-label">网页素材捞进云篓</div>
+        <div class="basket"></div>
       </div>
     </section>
 
     <section id="workflow" class="section shell">
-      <div class="section-head is-stacked reveal">
+      <div class="section-head reveal">
         <div>
           <div class="kicker">WORKFLOW</div>
-          <h2>素材流转，少走弯路</h2>
+          <h2>四步完成素材流转。</h2>
         </div>
-        <p>网页素材不该卡在下载目录里。云篓让收集、暂存、管理和复用都停在同一个侧边栏。</p>
+        <p>少一点说明，多一点路径。用户能快速理解：看见素材、捕捉素材、管理素材，再拖到别处复用。</p>
       </div>
-
-      <div class="before-after">
-        <article class="process-card reveal">
-          <h3>以前的素材流转</h3>
-          <div class="chips">
-            <span>下载</span><span>找文件夹</span><span>重命名</span><span>再上传</span><span>复制使用</span>
-          </div>
-        </article>
-        <article class="process-card is-now reveal">
-          <h3>现在用云篓</h3>
-          <div class="chips">
-            <span>看到素材</span><span>一键保存</span><span>进入侧边栏</span><span>拖拽复用</span>
-          </div>
-        </article>
-      </div>
-
       <div class="workflow">
-        <article class="step reveal"><span class="num">01</span><h3>打开网页</h3><p>在任何网页里看到图片、视频、文字或文件素材。</p></article>
+        <article class="step reveal"><span class="num">01</span><h3>打开网页</h3><p>在网页里看见图片、视频、文字或文件素材。</p></article>
         <article class="step reveal"><span class="num">02</span><h3>一键捕捉</h3><p>悬停保存、选中文字保存，或用区域框选批量捕捉。</p></article>
-        <article class="step reveal"><span class="num">03</span><h3>进入云篓</h3><p>素材落进侧边栏，成为可分类、可搜索、可下载的卡片。</p></article>
-        <article class="step reveal"><span class="num">04</span><h3>拖拽复用</h3><p>拖到编辑器、上传区、笔记工具、AI 对话或其他网页。</p></article>
+        <article class="step reveal"><span class="num">03</span><h3>进入云篓</h3><p>素材落进侧边栏，自动成为可管理、可下载的素材卡片。</p></article>
+        <article class="step reveal"><span class="num">04</span><h3>拖拽复用</h3><p>把素材拖到编辑器、上传区、笔记工具或其他网页。</p></article>
       </div>
     </section>
 
     <section id="showcase" class="section shell">
       <div class="showcase">
-        <div class="shot reveal" aria-label="云篓宣传图轮播" role="button" tabindex="0">
-          <img class="is-active" src="宣传图/宣传图%20(3).png" alt="云篓拖拽复用功能宣传图" />
-          <img src="宣传图/宣传图%20(1).png" alt="云篓云端存储和分类清晰宣传图" />
-          <img src="宣传图/宣传图%20(2).png" alt="云篓网页素材收集器宣传图" />
+        <div class="shot reveal" aria-label="云篓宣传图轮播">
+          <img class="is-active" src="https://vip.123pan.cn/1851737395/ymjew503t0n000ddy1fmd8arv5hco2egDIYyDIUwAwD2AGxvBID2BF==.png" alt="云篓拖拽复用功能宣传图" />
+          <img src="https://vip.123pan.cn/1851737395/ymjew503t0l000ddy1fn2rg7v2hcpnfvDIYyDIUwAwD2AGxvBID2BF==.png" alt="云篓云端存储和分类清晰宣传图" />
+          <img src="https://vip.123pan.cn/1851737395/ymjew503t0n000ddy1fmd8arv5hco2egDIYyDIUwAwD2AGxvBID2BF==.png" alt="云篓网页素材收集器宣传图" />
           <div class="shot-dots" aria-hidden="true"><span class="is-active"></span><span></span><span></span></div>
         </div>
         <div class="showcase-copy reveal">
           <div>
             <div class="kicker">PRODUCT</div>
-            <h2>素材工作台</h2>
+            <h2>收集网页素材，拖拽复用，效率翻倍。</h2>
           </div>
           <p>把散落在网页里的素材收进同一个侧边栏。需要时从云篓拖到 ChatGPT、Notion、飞书文档、公众号编辑器或任意上传区。</p>
-          <div class="metric-row">
-            <div class="metric"><strong>4 类</strong><span>图片 / 视频 / 文字 / 文件</span></div>
-            <div class="metric"><strong>1 栏</strong><span>收集与复用都在侧边栏</span></div>
-            <div class="metric"><strong>0 广告</strong><span>本地优先，无追踪</span></div>
-          </div>
-          <div class="tool-row" aria-label="可复用到常用 AI 和创作工具">
-            <span class="tool-logo"><i>G</i>ChatGPT</span>
-            <span class="tool-logo"><i>C</i>Claude</span>
-            <span class="tool-logo"><i>N</i>Notion</span>
-            <span class="tool-logo"><i>飞</i>飞书</span>
-            <span class="tool-logo"><i>公</i>公众号</span>
+          <div class="hero-note">
+            <span>图片</span>
+            <span>视频</span>
+            <span>文字</span>
+            <span>文件</span>
+            <span>本地安全</span>
           </div>
         </div>
       </div>
@@ -1243,14 +1005,14 @@
       <div class="section-head reveal">
         <div>
           <div class="kicker">FEATURES</div>
-          <h2>一个侧边栏，接住常用网页素材。</h2>
+          <h2>一个侧边栏，接住四类网页素材。</h2>
         </div>
-        <p>围绕真实使用场景做功能：先快速收进来，再清楚地管起来，最后顺手拖出去。</p>
+        <p>功能说明保持短句，视觉上用卡片承载，避免文案堆叠。</p>
       </div>
       <div class="feature-grid">
-        <article class="feature reveal"><div class="icon">图</div><h3>图片保存</h3><p>悬停保存网页图片、背景图和设计参考。</p></article>
-        <article class="feature reveal"><div class="icon">影</div><h3>视频文件暂存</h3><p>把视频、PDF 和网页文件先放进素材库。</p></article>
-        <article class="feature reveal"><div class="icon">文</div><h3>文字保存</h3><p>选中文字后保存成可搜索、可分类的素材。</p></article>
+        <article class="feature reveal"><div class="icon">图</div><h3>图片一键保存</h3><p>悬停保存网页图片、背景图和设计参考。</p></article>
+        <article class="feature reveal"><div class="icon">影</div><h3>视频与文件暂存</h3><p>把视频、PDF 和网页文件先放进素材库。</p></article>
+        <article class="feature reveal"><div class="icon">文</div><h3>保存网页文字</h3><p>选中文字后保存成可搜索、可分类的文字素材。</p></article>
         <article class="feature reveal"><div class="icon">夹</div><h3>分类清晰</h3><p>文件夹、收藏、搜索、回收站，素材不混乱。</p></article>
         <article class="feature reveal"><div class="icon">拖</div><h3>拖拽复用</h3><p>拖到编辑器、上传区、笔记工具或 AI 对话。</p></article>
         <article class="feature reveal"><div class="icon">云</div><h3>WebDAV 同步</h3><p>同步到自己的存储空间，跨设备继续使用。</p></article>
@@ -1277,49 +1039,29 @@
       <div class="download-panel reveal">
         <div>
           <div class="kicker">DOWNLOAD</div>
-          <h2>让网页素材，有一个随手可用的停靠点。</h2>
-          <p>下载扩展，把“保存素材”这件小事从下载目录里解放出来。</p>
+          <h2>让网页素材，有一个临时停靠点。</h2>
+          <p>云篓，陪你收集每一个灵感瞬间。</p>
         </div>
         <div class="download-actions">
-          <a class="btn btn-primary" href="https://1851737395.share.123pan.cn/123pan/onuBvd-vTKKv" target="_blank" rel="noopener">下载插件</a>
+          <a class="btn btn-primary" href="material-hub-extension.zip" download>下载插件</a>
           <a class="btn btn-store" href="https://chromewebstore.google.com/" target="_blank" rel="noopener">Chrome 商店下载</a>
-          <a class="btn btn-ghost" href="install.html">使用教程</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="contact-section shell">
-      <div class="contact-panel reveal">
-        <div>
-          <div class="kicker">CONTACT</div>
-          <h2>有反馈，直接找开发者。</h2>
-          <p>云篓还在持续打磨。如果你有网页素材收集、拖拽复用、WebDAV 同步相关的使用建议，可以通过邮箱或微信联系。</p>
-          <div class="hero-actions">
-            <a class="btn btn-store" href="./privacy.html">隐私政策</a>
-            <a class="btn btn-ghost" href="mailto:didi0825@aliyun.com">邮箱联系</a>
-          </div>
-        </div>
-        <div class="wechat-card">
-          <img src="微信.svg" alt="开发者微信二维码" />
-          <div><strong>开发者微信</strong><span>扫码联系</span></div>
+          <a class="btn btn-ghost" href="#workflow">使用教程</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="shell">
-    <div><strong>云篓 Yunlou</strong><br />网页素材中转站 · 随处存，随处用</div>
+  <footer id="contact" class="shell">
+    <div><strong>云篓 Yunlou</strong><br />网页素材中转站 · 收集、暂存、管理和拖拽复用</div>
     <div class="footer-links">
       <a href="./privacy.html">隐私政策</a>
-      <a href="#download">下载插件</a>
       <a href="mailto:didi0825@aliyun.com">联系我们</a>
+      <div class="wechat-card">
+        <img src="微信.svg" alt="开发者微信二维码" />
+        <div><strong>开发者微信</strong><span>扫码联系</span></div>
+      </div>
     </div>
   </footer>
-
-  <div class="lightbox" aria-hidden="true">
-    <button type="button" aria-label="关闭预览">×</button>
-    <img src="" alt="" />
-  </div>
 
   <script>
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1339,61 +1081,20 @@
       document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
     }
 
-    const showcase = document.querySelector(".shot");
     const showcaseImages = Array.from(document.querySelectorAll(".shot img"));
     const showcaseDots = Array.from(document.querySelectorAll(".shot-dots span"));
-    let activeShot = 0;
-
-    function setActiveShot(nextIndex) {
-      showcaseImages[activeShot]?.classList.remove("is-active");
-      showcaseDots[activeShot]?.classList.remove("is-active");
-      activeShot = nextIndex;
-      showcaseImages[activeShot]?.classList.add("is-active");
-      showcaseDots[activeShot]?.classList.add("is-active");
-    }
 
     if (!prefersReduced && showcaseImages.length > 1) {
+      let activeShot = 0;
+
       window.setInterval(() => {
-        setActiveShot((activeShot + 1) % showcaseImages.length);
+        showcaseImages[activeShot].classList.remove("is-active");
+        showcaseDots[activeShot]?.classList.remove("is-active");
+        activeShot = (activeShot + 1) % showcaseImages.length;
+        showcaseImages[activeShot].classList.add("is-active");
+        showcaseDots[activeShot]?.classList.add("is-active");
       }, 3600);
     }
-
-    const lightbox = document.querySelector(".lightbox");
-    const lightboxImage = lightbox?.querySelector("img");
-    const closeLightbox = lightbox?.querySelector("button");
-
-    function openLightbox() {
-      const currentImage = showcaseImages[activeShot];
-      if (!lightbox || !lightboxImage || !currentImage) return;
-      lightboxImage.src = currentImage.currentSrc || currentImage.src;
-      lightboxImage.alt = currentImage.alt;
-      lightbox.classList.add("is-open");
-      lightbox.setAttribute("aria-hidden", "false");
-    }
-
-    function hideLightbox() {
-      if (!lightbox) return;
-      lightbox.classList.remove("is-open");
-      lightbox.setAttribute("aria-hidden", "true");
-    }
-
-    showcase?.addEventListener("click", openLightbox);
-    showcase?.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openLightbox();
-      }
-    });
-    closeLightbox?.addEventListener("click", hideLightbox);
-    lightbox?.addEventListener("click", (event) => {
-      if (event.target === lightbox) hideLightbox();
-    });
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") hideLightbox();
-    });
   </script>
 </body>
 </html>
-
-
-
