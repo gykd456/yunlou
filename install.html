@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>云篓 - 安装教程</title>
+  <meta name="description" content="云篓 Chrome 扩展 zip 安装教程：下载、解压、打开扩展管理页、开启开发者模式并加载已解压的扩展。" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8faf2;
+      --paper: #fffef8;
+      --ink: #151d17;
+      --soft: #5f6f63;
+      --muted: #8a958a;
+      --brand: #b9f24a;
+      --brand-dark: #37661d;
+      --brand-soft: #eefbdd;
+      --line: rgba(50, 76, 41, 0.14);
+      --line-strong: rgba(50, 76, 41, 0.24);
+      --shadow-sm: 0 12px 32px rgba(41, 64, 33, 0.08);
+      --shadow-md: 0 24px 70px rgba(41, 64, 33, 0.13);
+      --max: 1040px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(185, 242, 74, 0.24), transparent 30rem),
+        radial-gradient(circle at 92% 12%, rgba(196, 228, 180, 0.48), transparent 34rem),
+        linear-gradient(180deg, #fffef8 0%, var(--bg) 62%, #f1f7e9 100%);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 14px;
+      z-index: 10;
+      padding-top: 14px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 62px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(255, 254, 248, 0.86);
+      box-shadow: 0 16px 54px rgba(41, 64, 33, 0.1);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .brand-logo { width: 46px; height: 34px; object-fit: contain; }
+    .brand-word { width: 58px; height: auto; object-fit: contain; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--soft);
+      font-size: 14px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0 20px;
+      font-weight: 950;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary {
+      color: #15210b;
+      background: linear-gradient(180deg, #cdfb62, var(--brand));
+      box-shadow: 0 18px 42px rgba(112, 170, 32, 0.24), inset 0 -2px 0 rgba(50, 86, 17, 0.14);
+    }
+
+    .btn-ghost {
+      color: var(--brand-dark);
+      border-color: rgba(55, 102, 29, 0.2);
+      background: rgba(238, 251, 221, 0.76);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero {
+      display: grid;
+      gap: 24px;
+      padding: 86px 0 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 38px;
+      border: 1px solid rgba(55, 102, 29, 0.18);
+      border-radius: 999px;
+      padding: 0 14px;
+      color: var(--brand-dark);
+      background: rgba(238, 251, 221, 0.9);
+      box-shadow: var(--shadow-sm);
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(44px, 6vw, 76px);
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 0;
+      color: var(--soft);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: rgba(255, 254, 248, 0.78);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 16px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .num {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      border-radius: 18px;
+      color: #20300f;
+      background: var(--brand);
+      box-shadow: 0 0 0 8px rgba(185, 242, 74, .2);
+      font-weight: 950;
+    }
+
+    .step h2 {
+      margin: 0 0 8px;
+      font-size: 23px;
+      line-height: 1.25;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--soft);
+    }
+
+    code {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 2px 7px;
+      color: var(--brand-dark);
+      background: var(--brand-soft);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      font-weight: 850;
+    }
+
+    .tip {
+      margin: 22px 0 70px;
+      border: 1px solid var(--line-strong);
+      border-radius: 28px;
+      padding: 22px;
+      color: var(--soft);
+      background: rgba(238, 251, 221, 0.68);
+    }
+
+    .tip strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 28px 0 44px;
+      color: var(--soft);
+      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--brand-dark);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 20px, 440px); }
+      .nav-links a:not(.btn) { display: none; }
+      .hero { padding: 52px 0 34px; }
+      h1 { font-size: 42px; }
+      .hero-actions .btn { width: 100%; }
+      .steps { padding: 12px; border-radius: 26px; }
+      .step {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 18px;
+      }
+      footer {
+        display: grid;
+        justify-items: center;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-wrap shell">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="./index.html" aria-label="返回云篓首页">
+        <img class="brand-logo" src="logo.svg" alt="" />
+        <img class="brand-word" src="资源%205.svg" alt="云篓" />
+      </a>
+      <div class="nav-links">
+        <a href="./index.html">官网首页</a>
+        <a class="btn btn-primary" href="https://1851737395.share.123pan.cn/123pan/onuBvd-vTKKv" target="_blank" rel="noopener">下载插件</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="eyebrow">Chrome 安装教程</div>
+      <h1>下载 zip，手动安装云篓。</h1>
+      <p class="lead">当前版本可以通过 Chrome 的“加载已解压的扩展程序”安装。整个过程只需要几分钟，不需要命令行。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://1851737395.share.123pan.cn/123pan/onuBvd-vTKKv" target="_blank" rel="noopener">下载 material-hub-extension.zip</a>
+        <a class="btn btn-ghost" href="chrome://extensions/">打开扩展管理页</a>
+      </div>
+    </section>
+
+    <section class="steps shell" aria-label="安装步骤">
+      <article class="step">
+        <span class="num">01</span>
+        <div>
+          <h2>下载插件压缩包</h2>
+          <p>点击页面里的“下载插件”，得到 <code>material-hub-extension.zip</code>。</p>
+        </div>
+      </article>
+      <article class="step">
+        <span class="num">02</span>
+        <div>
+          <h2>解压 zip</h2>
+          <p>右键压缩包，选择“全部解压”或“解压到当前文件夹”。解压后会得到一个扩展文件夹。</p>
+        </div>
+      </article>
+      <article class="step">
+        <span class="num">03</span>
+        <div>
+          <h2>打开 Chrome 扩展管理</h2>
+          <p>在地址栏输入 <code>chrome://extensions/</code>，进入扩展程序页面。</p>
+        </div>
+      </article>
+      <article class="step">
+        <span class="num">04</span>
+        <div>
+          <h2>开启开发者模式</h2>
+          <p>在扩展程序页面右上角，打开“开发者模式”。</p>
+        </div>
+      </article>
+      <article class="step">
+        <span class="num">05</span>
+        <div>
+          <h2>加载已解压的扩展程序</h2>
+          <p>点击“加载已解压的扩展程序”，选择刚才解压出来的文件夹。看到“云篓”卡片后，安装就完成了。</p>
+        </div>
+      </article>
+      <article class="step">
+        <span class="num">06</span>
+        <div>
+          <h2>固定云篓入口</h2>
+          <p>点击 Chrome 右上角扩展图标，把云篓固定到工具栏。之后打开网页，就可以收集素材并进入侧边栏使用。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="tip shell">
+      <strong>小提示</strong>
+      <p>如果 Chrome 提示“清单文件缺失或不可读”，通常是选错了文件夹。请进入解压后的目录，选择里面包含 <code>manifest.json</code> 的那一层文件夹。</p>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <div><strong>云篓 Yunlou</strong><br />网页素材中转站 · 随处存，随处用</div>
+    <a href="./index.html">返回官网首页</a>
+  </footer>
+</body>
+</html>
